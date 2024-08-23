@@ -1,0 +1,10 @@
+black scholes
+call price = underlying price * probability of in the money (CNF) - strike price * probability of in the money (adjusted
+for cost of carrying that asset over time) * e^-rT (to find present value of future strike price)
+10 dollar in the future worth 9.95 now because of opportunity to earn interest
+call price = current value * probability in the money - present value of strike price * probability in the money
+limitations:
+risk-free rate, volatility are assumed to be constant while calculating price. if interest rates change: inaccurate pricing
+only used to price European options: U.S. options could be exercised before the expiration date.
+Mitigation:
+term structure of interest rates done by defining the rate curve, then interpolating based on maturity
