@@ -8,3 +8,26 @@ risk-free rate, volatility are assumed to be constant while calculating price. i
 only used to price European options: U.S. options could be exercised before the expiration date.
 Mitigation:
 term structure of interest rates done by defining the rate curve, then interpolating based on maturity
+
+
+monte carlo
+assume stock price moves in brownian motion (random): generate many test scenarios, account for risk free interest rate, 
+volatility and a random shock, Z, generated from a normal distribution. if strike price for call more than future price,
+put zero. if not take difference, average it over all simulations. then discount that to present value.
+limitations:
+computationally intensive
+assume that returns are log-normal
+mitigation:
+relax the log-normal distribution through bootstrapping (random sampling of daily returns) using historical data
+calculates stock price each day, t/225 as 225 trading days, volatility = variance of historical returns, Z = randomly 
+sampled historical returns. 2D array of number of simulations and number of days. still accounts for r per day and 
+movement randomly sampled.
+basically use past data instead of log-normal distribution (more context)
+
+binomial tree
+underlying price -> two options, u or d. u depends on volatility and time step, d is inverse. time step is based on how accurate/calculation intensive you want model to be.
+each u and d has probability. u has p, p is risk neutral probability, based on risk free interest rate, how likely it is to be at u. d is 1-p.
+1 step: calculate expected payoff based on p, u and d. discount it to present value = call price.
+multi step:
+
+HOW TO TEST ALL THESE MODELS

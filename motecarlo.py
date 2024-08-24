@@ -23,6 +23,30 @@ def monte_carlo_option_pricing(S, K, T, r, sigma, option_type="call", num_simula
     
     return option_price
 
+
+def monte_carlo_with_bootstrapping(S, K, T, r, historical_returns, option_type="call", num_simulations=10000, num_steps=252):
+    dt = T / num_steps
+    S_paths = np.zeros((num_simulations, num_steps + 1))
+    S_paths[:, 0] = S
+    
+    # Resample returns with replacement for each simulation
+    for t in range(1, num_steps + 1):
+        sampled_returns = np.random.choice(historical_returns, size=num_simulations, replace=True)
+        S_paths[:, t] = S_paths[:, t-1] * np.exp((r - 0.5 * np.var(historical_returns)) * dt + sampled_returns * np.sqrt(dt))
+    
+    ST = S_paths[:, -1]
+    
+    if option_type == "call":
+        payoffs = np.maximum(ST - K, 0)
+    elif option_type == "put":
+        payoffs = np.maximum(K - ST, 0)
+    else:
+        raise ValueError("Invalid option type. Use 'call' or 'put'.")
+    
+    option_price = np.exp(-r * T) * np.mean(payoffs)
+    
+    return option_price
+
 # Example usage:
 S = 100    # Current stock price
 K = 100    # Strike price
