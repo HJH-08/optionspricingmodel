@@ -29,5 +29,16 @@ underlying price -> two options, u or d. u depends on volatility and time step, 
 each u and d has probability. u has p, p is risk neutral probability, based on risk free interest rate, how likely it is to be at u. d is 1-p.
 1 step: calculate expected payoff based on p, u and d. discount it to present value = call price.
 multi step:
+calculate payoff at all final nodes. then for all penultimate nodes, calculate value by p * up payoff + 1-p * down payoff then discounted to that period's value (fair value of call at that point in time). then use that value for payoff, discount again (p chance it will be worth up and 1-p chance it will be down) and calculate until root node. for american options: option value is max(option value and payoff if exercised at that time)
 
+finite difference method for calculating greeks (move stock price by small amount, see how option values changes)
+
+10-Year Treasury Constant Maturity Rate (DGS10) is the yield on U.S. Treasury securities with a constant maturity of 10 years. This rate is published by the Federal Reserve and is often used as a proxy for the "risk-free rate" in financial models.
+based on current market conditions to test the 3 models
+- current option data (start date changed to today no matter what), sigma, k, r all relative to today
+- stock price is the latest price from the market
+- based on these 2, models calculate option price. then find difference to actual current option price.
+
+incorporate risk free interpolation
+incorporate bootstrapping for monte carlo
 HOW TO TEST ALL THESE MODELS

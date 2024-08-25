@@ -47,16 +47,16 @@ def monte_carlo_with_bootstrapping(S, K, T, r, historical_returns, option_type="
     
     return option_price
 
-# Example usage:
-S = 100    # Current stock price
-K = 100    # Strike price
-T = 1      # Time to expiration (1 year)
-r = 0.05   # Risk-free rate (5%)
-sigma = 0.2  # Volatility (20%)
-num_simulations = 10000  # Number of simulations
+# # Example usage:
+# S = 100    # Current stock price
+# K = 100    # Strike price
+# T = 1      # Time to expiration (1 year)
+# r = 0.05   # Risk-free rate (5%)
+# sigma = 0.2  # Volatility (20%)
+# num_simulations = 10000  # Number of simulations
 
-call_price_mc = monte_carlo_option_pricing(S, K, T, r, sigma, option_type="call", num_simulations=num_simulations)
-put_price_mc = monte_carlo_option_pricing(S, K, T, r, sigma, option_type="put", num_simulations=num_simulations)
+# call_price_mc = monte_carlo_option_pricing(S, K, T, r, sigma, option_type="call", num_simulations=num_simulations)
+# put_price_mc = monte_carlo_option_pricing(S, K, T, r, sigma, option_type="put", num_simulations=num_simulations)
 
-print(f"Call Option Price (Monte Carlo): {call_price_mc:.2f}")
-print(f"Put Option Price (Monte Carlo): {put_price_mc:.2f}")
+# print(f"Call Option Price (Monte Carlo): {call_price_mc:.2f}")
+# print(f"Put Option Price (Monte Carlo): {put_price_mc:.2f}")
