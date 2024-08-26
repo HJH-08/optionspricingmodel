@@ -39,6 +39,18 @@ based on current market conditions to test the 3 models
 - stock price is the latest price from the market
 - based on these 2, models calculate option price. then find difference to actual current option price.
 
-incorporate risk free interpolation
-incorporate bootstrapping for monte carlo
-HOW TO TEST ALL THESE MODELS
+testing
+calculate absolute errors
+calculate mae, mse, rmse, r^2 values for all 3 models (around 0.985 for r^2)
+use scatterplot
+interpolating risk free rates makes black scholes perform worse...
+bootstrapping for monte carlo worst: introduce noise (historical market conditions not representative of current conditions, market regime changes)
+
+challenges
+data for very out of the money options (low volume traded): volatility data missing
+very out of the money options: for monte carlo for example, cases generated will very unlikely have any payoff, so predicted option value is commonly zero
+
+future developments
+stochastic volatility models: heston model to capture dynamics of volatility as volatility changes as market changes
+as stock price changes, volatility can change (driven by own random process, mean reversion for volatility)
+sharp drop in price = volatility increases

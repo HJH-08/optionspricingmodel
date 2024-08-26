@@ -2,6 +2,18 @@ import yfinance as yf
 import pandas as pd
 from fredapi import Fred
 
+def get_historical_returns(ticker_symbol, start_date, end_date):
+    # Download historical stock prices
+    stock_data = yf.download(ticker_symbol, start=start_date, end=end_date)
+    
+    # Calculate daily returns
+    stock_data['Returns'] = stock_data['Adj Close'].pct_change().dropna()
+    
+    # Return the historical returns (excluding the first NaN)
+    historical_returns = stock_data['Returns'].dropna().values
+    return historical_returns
+
+
 def collect_data(ticker_symbol, api_key):
     # Download current stock price
     stock_data = yf.download(ticker_symbol, period="1d")  # Fetches the latest data

@@ -1,6 +1,10 @@
 import numpy as np
 from scipy.stats import norm
 from scipy.interpolate import interp1d
+from fredapi import Fred
+
+FRED_API_KEY = "616c4611ede8eabcf5383214085ea542"
+fred = Fred(api_key=FRED_API_KEY)
 
 def get_risk_free_rate(T, rate_curve):
     # Extract maturities and rates
@@ -12,13 +16,25 @@ def get_risk_free_rate(T, rate_curve):
     # Return the interpolated rate for the given time to maturity
     return rate_interpolator(T)
 
-rate_curve = {
-    0.5: 0.03,  # 6-month interest rate is 3%
-    1.0: 0.05,  # 1-year interest rate is 5%
-    2.0: 0.06,  # 2-year interest rate is 6%
-    5.0: 0.07   # 5-year interest rate is 7%
-}
+def get_rate_curve():
+    # Define the maturity series you want from FRED
+    maturity_series = {
+        1.0: 'DGS1',  # 1-Year Treasury
+        2.0: 'DGS2',  # 2-Year Treasury
+        5.0: 'DGS5',  # 5-Year Treasury
+        10.0: 'DGS10'  # 10-Year Treasury
+    }
+    
+    rate_curve = {}
+    for maturity, series_id in maturity_series.items():
+        # Fetch the latest available rate using the instance 'fred'
+        rate_series = fred.get_series(series_id).dropna()
+        latest_rate = rate_series.iloc[-1] / 100  # Convert to decimal
+        rate_curve[maturity] = latest_rate
+    
+    return rate_curve
 
+rate_curve = get_rate_curve()
 
 def black_scholes_rate_curved(S, K, T, rate_curve, sigma, option_type="call"):
     # Get the appropriate risk-free rate for the given maturity
